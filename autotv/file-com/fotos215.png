@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" http-equiv="Content-Type" content="text/html";>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>GuiaNet</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+	<link href="libs/bulma.min.css" rel="stylesheet">
+	<link href="libs/daterangepicker.css" rel="stylesheet">
+	<link href="libs/sa2.css" rel="stylesheet">
+	<link href="libs/bulma-tagsinput.min.css" rel="stylesheet">
+	<link href="libs/styles.v1.5.css" rel="stylesheet">
+
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+	<script src="libs/fa-all.js"></script>
+	<script src="libs/jquery-1.11.3.min.js"></script>
+	<script src="libs/moment.min.js"></script>
+	<script src="libs/daterangepicker.js"></script>
+	<script src="libs/sa2.js"></script>
+	<script src="libs/bulma-tagsinput.min.js"></script>
+	<script src="libs/redalib.js"></script>
+</head>
+<script>
+//window.oncontextmenu=function(){return false;}
+//document.onkeydown=function(e){if (window.event.keyCode==123||e.button==2)return false;}
+</script>
+<body>
+<!----------------- PHONE ------------------->
+<section class="is-hidden-desktop" id="navbar">
+<div class="container">
+<nav class="level mx-5 py-5">
+	<div class="level-left" style="display:inline;width:50%;float:left;">
+		<div class="">
+			<a href="index.php"><img src="img/top-guianet-navbar.png"></a>
+		</div>
+	</div>
+	
+	<div class="level-right" style="margin-top:5px">
+		<div class="buttons">
+			<a class="button small st mx-1" onclick="ingresoan();"><i class="fa fa-plus"></i>&nbsp;t Publicar</a>
+			<a class="button small unirme mx-1" onclick="unirmean();"><i class="fa fa-user-plus"></i>&nbsp;t Unirme</a>
+		</div>
+	</div>	
+	
+
+</nav>
+</div>
+</section>
+
+<!----------------- COMPUTER ------------------->
+<section class="is-hidden-touch" id="navbar">
+<div class="container">
+<nav class="navbar level mx-5 px-5 py-4">
+	<div class="level-left">
+		<div class="level-item">
+			<a class="navbar-item" href="index.php"><img src="img/top-guianet-navbar.png"/></a>
+		</div>
+	</div>
+
+	<div class="level-right">
+		<div class="buttons">
+			<a class="button st mx-2 " onclick="ingresoan();"><i class="fa fa-plus"></i>&nbsp;Publicar</a>
+			<a class="button unirme mx-2" onclick="unirmean();"><i class="fa fa-user-plus"></i>&nbsp; Unirme</a>
+		</div>
+	</div>
+</nav>
+	</div>  
+</section>
+
+<script>
+const rs=`
+<div class="modal" id="modin">
+  <div class="modal-background"></div>
+<div class="card login p-3">
+ <div class="card-content">
+ <p style="text-align:right;">
+	<i onclick="closean();" class="fas fa-times-circle"></i>
+	</p>
+	<p class="title has-text-centered">Ingresar</p>
+	<p class="subtitle has-text-centered">Solo usuarios registrados</p>
+	<div class="field has-text-centered">
+		<label class="label">E-mail:</label>
+			<div class="control">
+				<input class="input" type="text" id="user" placeholder="Ingresar e-mail">
+			</div>
+	</div>
+	<div class="field has-text-centered">
+		<label class="label">Contrase&ntilde;a:</label>
+			<div class="control">
+				<input class="input" type="password" id="pass" placeholder="Contrase&ntilde;a">
+			</div>
+	</div>
+     <div class="has-text-centered p-5">	
+		<a class="button is-fullwidth login m-1" onclick="accesoan()">Ingresar</a>
+	 </div>
+</div>
+</div>
+`;
+
+function ingresoan() {
+$('body').append("<div id='modpp'>"+rs+"</div>");
+$('#respuesta').html('');
+$('#modin').addClass("is-active");
+}
+
+const uni=`
+<div class="modal" id="modin">
+  <div class="modal-background"></div>
+<div class="card login2 p-3">
+ <div class="card-content">
+ <p style="text-align:right;"><i onclick="closean();" class="fas fa-times-circle"></i></p>
+
+<p class="has-text-centered is-size-5"><strong>¿Sab&iacute;as que la mayor&iacute;a de las personas dedica gran parte de su tiempo a buscar 
+ofertas y promociones de productos y servicios antes de comprar en los comercios locales?</strong> </p>
+<br>	
+<p class="has-text-centered is-size-5">¿Si quer&eacute;s <strong>
+incluir tu comercio o servicios profesionales</strong> en la gu&iacute;a, <strong>hac&eacute; click </strong>en el bot&oacute;n?
+</p>	
+<br>
+<p class="has-text-centered"><span><a class="button is-whatsapp" style="color:#fff;" href="https://api.whatsapp.com/send?phone=542983528094&text=Quisiera%20saber%20como%20incorporar%20mi%20negocio%20en%20la%20guianet" target="_blank" ><strong>Incorporar mi negocio a Guía Net</strong></a></span></p>
+ 
+ <footer class="card-footer p-0">
+	<p class="card-footer-item register">
+	</p>
+ </footer>
+</div>
+</div>
+`;
+
+function unirmean() {
+$('body').append("<div id='modpp'>"+uni+"</div>");
+$('#respuesta').html('');
+$('#modin').addClass("is-active");
+}
+
+function closean() {
+$('#modin').removeClass("is-active");
+$('#modpp').remove();
+}
+
+function accesoan() {
+let us=$('#user').val().trim();
+let pa=$('#pass').val().trim();
+if (us=="" || pa=="") { $('#respuesta').html('Debe completar todos los campos');return; }
+$.when(
+	$.ajax({type:'POST',url:'db/registro.php',data:{"z":240,"a":us,"b":pa},cache:false })
+).then(function(res){ 
+	if (res=='ok') {
+		go('tienda/index.php');//closean();
+	} else {
+		$('#respuesta').html('Revise el email y la contrase&ntilde;a');
+		}
+	
+	});
+}
+
+const nc=`
+<div class="modal" id="modnc" >
+  <div class="modal-background"></div>
+  <div class="modal-card">
+
+    <section class="modal-card-body">
+	Comuniquese con el Telefono .......<br>
+	Para solicitar un acceso a GuiaNet
+    </section>
+	<footer class="modal-card-foot py-2">
+		<a class="button is-success" onclick="closenc()">Aceptar</a>
+	</footer>
+
+  </div>
+</div>
+`;
+
+
+function nuevac() {
+$('body').append("<div id='modncm'>"+nc+"</div>");
+$('#modnc').addClass("is-active");
+}
+
+function closenc() {
+$('#modnc').removeClass("is-active");
+$('#modncm').remove();	
+}
+
+</script>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////start header -->
+
+<section class="hero-vendedor" style="background-color:#34325A; border-top:1px solid #ccc;border-bottom: 1px solid #fff;">
+	<div class="hero-body" style="background-image: url(file-com/ff/ff/fotos-1.png);background-position: 25% 55%;background-size: cover;opacity:0.8">
+</section>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////end header -->
+
+<section class="mx-5" id="perfil-section">
+<div class="container">
+	<div class="columns px-5" style="background-color:#fff">
+		<div class="column is-12">
+			<h1 class="title-descripcion has-text-left"></h1>
+			<p class="texto-descripcion has-text-left"></p>
+		</div>
+	</div>
+	<div class="columns p-3 px-5" style="background-color:#fff">
+		<div class="column is-12"><hr class="style2"></div>
+	</div>
+	<div class="columns px-5" style="background-color:#fff">
+		<div class="column is-6">
+	
+		<br>	
+		<div class="media"  onclick="whatsappmsgv();" style="border-top:0px;font-size:1.2em;color:#666;margin-top:0px;">
+			<div class="buttons">
+				<a href="#" style="background: #48C355;text-shadow: 0px 1px 1px #333;border-radius:4px;color:#fff;font-size:.8em;font-weight:bold;padding:10px 15px;border: solid #666 1px;">	
+				<i class="fab fa-whatsapp" style="font-size:150%;"></i>&nbsp;&nbsp;Enviar mensaje X Whatsapp</a>
+			</div>
+		</div>
+	</div>
+
+		<div class="column is-6">
+	<div class="media" style="border-top:0px;font-size:1.2em;color:#666;margin-top:0px;margin-bottom:-10px;">
+      <div class="media-left" style="margin-right:7px;">
+        <p><i class="fa fa-map-marker"></i></p>
+      </div>
+      <div class="media-content">
+        <div class="content">
+			<p style="color:#666;"></p>
+        </div>
+      </div>
+	</div>
+		</div>
+	</div>
+</div>
+</section>
+
+<!-- /////////////////start section CATALOGO DE PRODUTOS  //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////// -->
+<section class="hero">
+		<div class="hero-body">
+			<div class="container">
+				<div class="columns is-centered">
+					<div class="column is-10">
+						<div class="sub-section" id="galerian">
+							<h1 class="is-size-4 title-descripcion ">CAT&Aacute;LOGO DE PRODUCTOS</h1>
+							<h3 class="subtitle-home"></h3>
+							<!-- comienza listado de productos -->
+							<div class="columns is-multiline my-3" id="galeria" ></div>
+							<!-- finaliza listado de productos  -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
+
+<!-- /////////////////end section CATALOGO DE PRODUTOS  //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////// -->
+
+<section class="mx-5" id="perfil-section">
+	<div class="container">
+		<div class="columns p-3 px-5" style="background-color:#fff">
+			<div class="column is-12">
+					 
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- /////////////////start section FOOTER  //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////// -->
+
+<section class="has-background-white mt-6" style="border-top:1px solid #ccc;border-bottom: 1px solid #fff;">
+<footer class="hero mt-6">
+			<div class="container has-text-centered">
+					<div class="has-text-centered">
+						<img src="img/logo-footer.png" width="160px">
+					</div>
+					<div class="columns m-2">
+					<!-- boton para unirse -->
+					<div class="column">
+						<nav class="">
+							<a class="button st mx-2" onclick="unirmean();"><i class="fa fa-user-plus"></i>&nbsp;Unirme a la gu&iacute;a</a>
+						</nav>
+					</div>
+					</div>
+					
+					<!-- redes sociales -->
+					<div class="columns m-2">
+					<div class="column">
+						<nav class="">
+							<a href="https://www.facebook.com/appguianet" target="_blank" class="button is-small is-facebook"><strong>Facebook:</strong> Guíanet</a>
+							<a href="https://www.instagram.com/appguianet/" target="_blank" class="button is-small is-instagram"><strong>Instagram:</strong> @appguianet</a>
+							<br><br>
+							<a href="mailto:appguianet@gmail.com" target="_blank" > <i class="fa fa-mail-bulk"></i>
+							<strong>Email:</strong> appguianet@gmail.com </a>
+						</nav>
+					</div>
+				</div>
+			</div>
+</footer>
+
+<footer class="hero my-4">
+	  <div class="container has-text-centered">
+	  <div class="has-text-grey is-size-7">
+		Guia Net 2021 &copy; - San Cayetano Pcia. Bs. As<br>
+		Desarrollado por <a href="https://www.caynet.com.ar" target="_blank">Caynet.com.ar</a> & <a href="#" target="_blank">Aporte Digital</a>
+	    </div>
+     </div>
+</footer>
+</section>	
+<!-- /////////////////end sectionFOOTER  //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////// -->
+<style>
+.container {-ms-overflow-style: none;scrollbar-width: none;}
+.container::-webkit-scrollbar {display: none;}
+</style>
+
+	</body>
+</html>
+<div class="modal" id="masinfo" >
+	<div class="modal-background"></div>
+	<div class="modal-card">
+		<section class="modal-card-body px-1 py-1 container" id="masinfop"></section>
+	</div>
+	<div id="btncerrar"></div>
+</div>	
+<script>
+
+/////////////////////   AMPLIAR
+const fichamasinfo=`
+<center><img src="{{img}}"></center>
+<div class="has-text-left mx-6 mb-6">
+	<div class="py-1"> 
+		<h1 class="title-descripcion">{{nombre}}</h1>
+		<h2 class="precio-descripcion">{{precio}}</h2>
+	</div>	 	 
+	<hr class="style2"><br>
+	<div class="media"> 
+		<figure class="media-left">
+			<p class="image"><img src="img/market-desc.png" width="40px"></p>
+		</figure>
+		<div class="media-content">
+			<div class="content">
+				<p>Vendedor:&nbsp;#{{vendedor}}</p>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="py-4">{{telc}}{{telf}}</div>
+	<hr class="style2">
+	<div class="py-4">    
+		<p class="subtitle-descripcion my-2"><strong>Descripci&oacute;n:</strong></p>
+		<p class="texto-descripcion">{{descripcion}}</p>
+	</div>	 
+	<hr class="style2">
+	{{promo}}
+	<div class="py-2">
+		<p class="subtitle-descripcion my-2"><strong>Medios de pago:</strong></p>
+		{{medpag}}
+	</div>
+	<br>
+<!--   
+<hr class="style2">
+<div class="py-4">
+	<p class="subtitle-descripcion my-2"><strong>Env&iacute;o a domicilio:</strong> SI ACEPTA
+</div>
+-->
+	<hr class="style2">   
+	<div class="py-2">   
+		<p style="font-weigtt:1.3em;"><i class="fa fa-share-alt-square fa"></i>&nbsp;{{link}}</p>
+	</div>
+</div>`;
+
+var fichan;
+
+function whatsappmsg() {
+let reg=fichan;
+let s=reg[18].trim();  // telefono
+log(1,reg[1],reg[0],""); // tipo,tienda,prod,msg
+if (s=='') return "";
+let lin="http://guianet.com.ar/producto.php?p="+reg[0];
+s=reAC(s,"(","");s=reAC(s,")","");s=reAC(s," ","");s=reAC(s,"-","");
+if (s.length>10) { s=s.substring(s.length-10,s.length); }
+let texto="De guia comercial, quisiera informacion del producto: "+lin;
+let url="https://api.whatsapp.com/send?phone=54"+s+"&text="+texto;
+window.open(url, '_blank');
+}
+
+function whatsapplink() {
+let reg=fichan;
+let s=reg[18].trim();  // telefono
+log(1,reg[1],reg[0],""); // tipo,tienda,prod,msg
+if (s=='') return "";
+let lin="http://guianet.com.ar/producto.php?p="+reg[0];
+s=reAC(s,"(","");s=reAC(s,")","");s=reAC(s," ","");s=reAC(s,"-","");
+if (s.length>10) { s=s.substring(s.length-10,s.length); }
+let texto=lin;
+let url="https://api.whatsapp.com/send?text="+texto;
+window.open(url, '_blank');
+}
+
+var nombrec;
+var tiendac;
+var benefic;
+var telefij;
+
+function atiendaref(reg) {
+if (urlname[reg[1]]=='') {
+	return "'vendedor.php?c="+reg[1]+"'";
+	}
+return "'"+urlname[reg[1]]+"'";
+
+}
+
+function ampliar(sid) {
+fichan=sid.split('|');		
+console.log(fichan);
+let reg=fichan;
+log(3,reg[1],reg[0],""); // tipo,tienda,prod,msg click en vista
+let spre='';
+if (parseInt((reg[9]=='')?'0':reg[9])!=0) {
+	if (parseInt((reg[10]=='')?'0':reg[10])==0) {
+		spre='<p class=""><strong>$ '+reg[9]+'</strong></p>';
+	} else {
+		spre='<strike><p class="">$ '+reg[9]+'</p></strike><p class=""><strong>$ '+reg[10]+'</strong></p>';
+		}
+	}
+
+let vend="<a href="+atiendaref(reg)+">"+nombrec[reg[1]]+"</a> <br> <a href="+atiendaref(reg)+" class='button vertienda small' style='padding:1px 5px;margin:3px auto;font-size:.75em'><i class='fa fa-shopping-bag'></i>&nbsp;Ver tienda de producto</a>";
+
+let medpag='';
+let promo='';
+
+let b2,b1=benefic[reg[1]].split('}');
+for(let i=0;i<b1.length;i++) {
+	if (b1[i]!="") { 
+		b2=b1[i].split('{');
+		if (b2[0][0]=="M") {
+			medpag+='<p style="font-size:1em;display:block;"><img src="'+photoname('file-prm','logo',b2[1])+'" style="height:20px;">&nbsp;&nbsp;'+b2[3]+'</>';
+		} else {
+			promo+='<span style="font-size:1em;display:block;"><img src="'+photoname('file-prm','logo',b2[1])+'" style="height:20px;">&nbsp;&nbsp;'+b2[3]+'</span><br>';
+			}
+		} 
+	}
+
+if (promo!='') {
+	promo='<div class="py-4"><p class="subtitle-descripcion my-2"><strong>Promoci&oacute;n:</strong><br>'+promo+'</div>';
+	}
+	
+let telc='';
+if (reg[18]!='') {
+	telc='<button class="button is-whatsapp" onclick="whatsappmsg();"><i class="fab fa-whatsapp fa-2x"></i>&nbsp;'+reg[18]+'</button>';
+	}
+	
+let telf='';
+if (telefij[reg[1]]!='') {
+	telf='<button class="button is-whatsapp"><i class="fas fa-phone fa-2x"></i>&nbsp;'+telefij[reg[1]]+'</button>';
+	}
+	
+let lin="<a onclick='whatsapplink();'>Compartir producto por WhatsApp:</a>";
+
+$('#masinfop').html(strtemplate(fichamasinfo,{
+		'img':photoname('file-pro',reg[8],reg[0]),
+		'nombre':reg[2],
+		'precio':spre,
+		'descripcion':nl2br(reg[7]),
+		'vendedor':vend,
+		'link':lin,
+		'telc':telc,'telf':telf,
+		'medpag':medpag,
+		'promo':promo
+		}));
+		
+
+document.body.style.position = 'fixed';
+document.body.style.top = `-${window.scrollY}px`;	
+$('#btncerrar').html('<div style="position:absolute;right:50px;top:50px;z-index:999"><button class="button closedown is-rounded is-large" onclick="closeinfo();"><i class="fas fa-times"></i></button></div>');
+$('#masinfo').addClass('is-active');
+$('.modal-card-body').scrollTop(0);
+}
+
+function closeinfo() {
+const scrollY = document.body.style.top;
+document.body.style.position = '';
+document.body.style.top = '';
+window.scrollTo(0, parseInt(scrollY || '0') * -1);
+$('#btncerrar').html('');
+$('#masinfo').removeClass('is-active');
+}
+</script><script>
+//--------------------------------------------------------
+function buscap() {
+if ($('#buscas').val()=='') { return; }
+go('resultados.php?q='+$('#buscas').val());
+}
+
+////////////////////////////////////////////
+function whatsappmsgv() {
+let reg=fichan;
+let s=reg[3].trim();  // telefono
+log(1,reg[1],reg[0],""); // tipo,tienda,prod,msg
+if (s=='') return "";
+let lin="http://guianet.com.ar/producto.php?p="+reg[0];
+s=reAC(s,"(","");s=reAC(s,")","");s=reAC(s," ","");s=reAC(s,"-","");
+if (s.length>10) { s=s.substring(s.length-10,s.length); }
+let url="https://api.whatsapp.com/send?phone=54"+s;
+window.open(url, '_blank');
+}
+
+var memlist;
+
+//////////////// galeria
+const ficha=`
+<div class="column is-6-mobile is-6-tablet is-3-desktop is-clickable" style="float:left;" onclick="ampliar({{lin}});" >
+	<div class="card producto">
+		<div class="media media--4-3"> <img src="{{imgt}}" alt="{{nombre}}" onError="this.src='{{img}}'"> </div>
+		<div class="primary-title">
+			<div class="primary-text">{{nombre}}</div>
+			<div class="secondary-text">{{precio}}</div>
+		</div>
+		<hr class="divider">
+		<div class="actions">
+			<div class="action-icons">
+				<button class="bt" onclick="ampliar({{lin}});"><i class="fa fa-plus"></i> detalles</button>
+			</div>
+			<div class="action-icons float-right"> 
+				<button class="bt" onclick="comparto({{lin}});event.stopPropagation();">Compartir <i class="fa fa-share-square"></i></button>
+			</div>
+		</div>
+	</div>
+</div>`;
+
+var ncliente=0;
+
+function hacegaleria() {
+$.when(
+	$.ajax({type:'POST',url:'db/web-prod.php',data:{"z":5,"a":ncliente},cache:false })
+).then(function(res){ let s='';
+	if (res=='') { $('#galeria').html("");$('#galerian').html("");return;}
+	memlist=res.split('^');
+	for (let i=0;i<memlist.length;i++) {
+		if (memlist[i]=="") continue;
+		let reg=memlist[i].split('|');
+		let cate=reg[6].split(',');
+		let catego='';
+		for (let j=0;j<cate.length;j++) {
+			if (cate[j]!='') { catego+='<span class="tag is-info">'+cate[j]+'</span>&nbsp;'; }
+			}
+		let spre='';
+if (parseInt((reg[9]=='')?'0':reg[9])!=0) {
+	if (parseInt((reg[10]=='')?'0':reg[10])==0) {
+		spre='<p class=""><strong>$ '+reg[9]+'</strong></p>';
+	} else {
+		spre='<strike><p class="">$ '+reg[9]+'</p></strike><p class=""><strong>$ '+reg[10]+'</strong></p>';
+		}
+	}
+		s+=strtemplate(ficha,{
+		'lin':'memlist['+i+']',
+		'img':photoname('file-pro',reg[8],reg[0]),
+		'imgt':photoname('file-pro',"th"+reg[8],reg[0]),
+		'nombre':reg[2],
+		'precio':spre,
+		'descripcion':nl2br(reg[7]),
+		'categorias':catego,
+		});
+		}
+	$('#galeria').html(s);
+});
+}
+
+var nombrec,tiendac,benefic;
+
+////////////////////////////////////////
+$(document).ready(function() {
+ncliente=-1;
+if (ncliente==-1) go('index.php');
+hacegaleria();
+fichan=``.split('|');
+});
+</script>

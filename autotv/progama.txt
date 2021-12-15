@@ -1,0 +1,6 @@
+0:00	ajuste
+10:00 	video videos/comienzo.mp4
+>		hora
+>		inicio
+10:05	comercio
+10:06	
