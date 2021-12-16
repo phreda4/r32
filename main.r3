@@ -1,116 +1,103 @@
-| GuiaNetV 
+| bubles
 | PHREDA 2021
-|MEM 128
-^r3/win/console.r3
-^r3/win/sdl2.r3	
-^r3/win/sdl2image.r3	
-^r3/win/sdl2mixer.r3
-^r3/win/sdl2ttf.r3
-|^r3/win/ffm.r3
 
-^r3/util/timeline.r3
-^r3/util/fontutil.r3
-^r3/util/boxtext.r3
-^r3/util/dbtxt.r3
+^r3/win/sdl2.r3
+^r3/win/sdl2image.r3
 
-^r3/lib/parse.r3
-^r3/lib/mem.r3
-^r3/lib/key.r3
-^r3/lib/sys.r3
-^r3/lib/gr.r3
+^r3/lib/rand.r3
+^r3/lib/3d.r3
+^r3/util/arr16.r3
 
-^r3/autotv/ajuste.r3
-^r3/autotv/rubros.r3
+#spr_ball
+#bubles 0 0	| array
 
-^r3/autotv/blkproducto.r3
-^r3/autotv/blkcomercio.r3
-^r3/autotv/blkvideos.r3
+|---------
+:r.01 0.001 randmax ;
+:r.1 1.0 randmax ;
+:r.8 8.0 randmax ;
 
-|--------------- Programas
-#prognow 0
-#prog>> 0
-#estado
-
-|--------------- 
-##programa 0
-#prgnow 0
-
-:endlast | -- ; ejecuta final de actual
-	prgnow 0? ( drop ; ) 
-	16 + @ 0? ( drop ; )
-	ex ;
+|---------
+:drawball | -- 
+	0 0 0 project3d 
+	14 - swap 14 - swap
+	28 28 spr_ball SDLimages ;
 	
-:changeprg | adr --
-	endlast
-	0 'prgexit !
-	dup 'prgnow !
-	dup 8 + @ 'programa ! 
-	@ 0? ( drop ; )
-	ex ;
-
+:hitwall | limit --
+	b> 8 - !
+	b> 8 + dup @ neg swap ! ;
 	
-#pr 'prgcomercio 'prgproductos 'prgcvideo 0
-#np 'pr
-
-:nextprog
-	np @ 0? ( drop 'pr dup 'np !  @ )
-	changeprg
-	8 'np +!
+:bub | adr -- adr/adr 0 delete
+ 	>b
+	mpush
+	b@+
+	26.0 >? ( 26.0  hitwall )
+	-26.0 <? ( -26.0 hitwall )
+	b@+
+	-20.0 <? ( -20.0 hitwall )
+	0 mtransi
+	b@+ b> 24 - +!
+	b@ 0.01 - b> ! | gravedad
+	b@+ b> 24 - +!
+	drawball
+	mpop
 	;
-	
 
-|---------------------------------
-:mainloop
-	programa ex	
-	updatebarra 
-	SDLRedraw
+:+buble
+	'bub 'bubles p!+ >a
+	r.8 a!+ r.8 a!+
+	1.1 a!+ r.1 a! ;
+
+:collision | p1 p2 -- p1 p2
+	over 8 + @ over 8 + @ - dup *. | (x1-x2)^2
+	pick2 16 + @ pick2 16 + @ - dup *. +
+	4.0 >=? ( drop ; ) sqrt. 2.0 swap -
+	1 >> >a
+	over 8 + @ over 8 + @ -
+	pick2 16 + @ pick2 16 + @ -
+	atan2 sincos 				| p1 p2 si co
 	
-	prgexit 1? ( nextprog ) drop | termino bloque
-		
-	SDLkey
-	>esc< =? ( exit )
-	
-	<f1> =? ( nextprog )
-|	<f1> =? ( 'prgcomercio changeprg )
-|	<f2> =? ( 'prgproductos changeprg ) 		
-|	<f3> =? ( 'prgajuste changeprg )
-|	<f3> =? ( 'prgtemp changeprg )	
-|	<f4> =? ( 'prgcvideo changeprg )
-	
-|	<f6> =? ( mus_fondo 0 Mix_PlayMusic )
-	
-	drop ;		
+	a> *.
+	dup pick4 16 + +!
+	dup pick4 32 + +!
+	neg dup pick3 16 + +!
+	pick2 32 + +!
+
+	a> *. 
+	dup pick3 8 + +! 
+	dup pick3 24 + +!
+	neg dup pick2 8 + +! 
+	over 24 + +!
+	;
 
 :main
-	inifont
-	inivideos
 
-	inirubros
-	loadscroll
-	getHTH
+	$0 SDLclear
 	
-	"media/LOGO-GuiaNET-TV.png" loadimg 'imglogo !
-
-	reloaddbproductos	
-	reloaddbcomercio
+	800 600 whmode
 	
-	mfrestart
+	0 0 -45.0 mtrans
+	'bubles p.draw
+	SDLRedraw
 	
-	'prgajuste changeprg
-	'mainloop SDLshow
+	'collision 'bubles p.map2
 	
+	SDLkey
+	>esc< =? ( exit )
+	<f1> =? ( +buble )
+	drop
 	;
 
-:  |---------------------------------------------
-	timeline.inimem
+:inicio
+	1000 'bubles p.ini
+	"r3sdl" 800 600 SDLinit
+
+	"media/img/ball.png" loadimg 'spr_ball !
+	1000 'bubles p.ini
+	'bubles p.clear
 	
-	"r3sdl" 1280 720 SDLinitgl
-	|"r3sdl" 1024 576 SDLinitgl
-	|"r3sdl" 800 600 SDLinitgl
-	SNDInit
+	'main SDLshow
 	
-	main 
+	SDLquit ;
 	
-	SNDQuit
-	SDLquit
-	;
+: inicio ;
+
